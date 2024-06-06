@@ -3,12 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PreEntrega2</title>
+    <link rel="stylesheet" href="css/main.css">
+    <title>PreEntrega3</title>
 </head>
 <body>
-    <h1>PreEntrega 2</h1>
-    <h2>Simulador para calcular el costo total de un producto</h2>
-
+    <main>
+        <h1 class="titulo-principal">PreEntrega 3</h1>
+        <section>
+            <div>
+                <button id="color-pagina" class="boton">Modo Oscuro</button>
+            </div>
+            <div>
+                <ul class="lista" id="agregar">
+                    <h4>Agregar camisas al carrito</h4>
+                    <ul class="lista-camisas">
+                        <li>Camisa Blanca - $1000</li>
+                        <li>Camisa Negra - $2000</li>
+                        <li>Camisa Azul - $3000</li>
+                        <li>Camisa Roja - $4000</li>
+                        <li>Camisa Verde - $5000</li>
+                        <li>Camisa Amarilla - $6000</li>
+                    </ul>
+                    <form action="" id="agregar-form" class="form">
+                        <input type="text" id="agregar-input" class="form-input">
+                        <input type="submit" id="agregar-submit" class="form-submit" value="Agregar">
+                    </form>
+                </ul>
+            </div>
+        </section>
+    </main>  
     <script src="./js/main.js"></script>
 </body>
 </html>

@@ -1,88 +1,62 @@
-//PreEntrega 2 
+//PreEntrega 3
 //Logan Araujo Hernandez - Comisión 57695
 
-//Calcular costo total de un producto (Tienda de ropa)
+//Implementar DOM, Eventos y Storage.
 
-alert("Bienvenid@ a la tienda de ropa!")
-alert("Vendemos lindas opciones de Camisas y Pantalones!")
+//Modo oscuro (cambiar entre modo oscuro y claro) con LocalStorage.
 
-//En este array se guardaran las camisas que se compren
-const camisas = []
+const botonColor = document.querySelector("#color-pagina");
+const body = document.body;
 
-let coloresCamisa;
-let preciosCamisa;
+let modoOscuro = localStorage.getItem("modo-oscuro");
 
-//Este ciclo es para la venta de camisas en la que si no deseas comprar ninguna camisa escribes "salir"
-do {
-    coloresCamisa = prompt("De que color le gustaria comprar su camisa?.\n-Blanco \n-Negro \n-Verde \n-Azul \n-Morado \nSi desea salir, escriba \"salir\"");
+function activarModoOscuro() {
+    body.classList.add("modo-oscuro");
+    localStorage.setItem("modo-oscuro", "activado");
+}
 
-    if (coloresCamisa.toLowerCase() !== "salir") {
+function desactivarModoOscuro() {
+    body.classList.remove("modo-oscuro");
+    localStorage.setItem("modo-oscuro", "desactivado");
+}
 
-    do{    
-        preciosCamisa = parseInt(prompt("De que talla deseas la camisa? (Escriba el precio) \n-Talla S = $1000 \n-Talla M = $2000 \n-Talla L = $3000 \n-Talla XL = $4000 \n-Talla XXL = $5000 \nSi desea salir, escriba \"salir\""));
-    } while (isNaN(preciosCamisa) || preciosCamisa === "" || preciosCamisa === null)
+if (modoOscuro === "activado") {
+    activarModoOscuro();
+} else {
+    desactivarModoOscuro();
+}
 
-        let compraCamisa = {
+botonColor.addEventListener("click", () => {
+    modoOscuro = localStorage.getItem("modo-oscuro");
 
-            color: coloresCamisa,
-            precio: preciosCamisa
-        }
-        camisas.push(compraCamisa);
+    if (modoOscuro === "activado") {
+        desactivarModoOscuro();
+    } else {
+        activarModoOscuro();
     }
 
-} while (coloresCamisa.toLowerCase() !== "salir")
+})
 
-//Esta function es para determinar el costo total de las camisas
-function calcularCostoTotalCamisas() {
-    let total = camisas.reduce((acc, camisas) => acc + camisas.precio, 0);
-    return total;
-}
+//Agregar Articulos a una lista de compra
 
-//Estos console.log son para mostrar en cosola el array de las camisas compradas y el costo total de las mismas
-console.log("Camisas compradas", camisas)
-console.log("Costo total de las camisas $", calcularCostoTotalCamisas());
+const agregarForm = document.querySelector("#agregar-form")
+const agregarInput = document.querySelector("#agregar-input")
+const agregar = document.querySelector("#agregar")
 
-alert("Desea llevar algun pantalon?")
+agregarForm.addEventListener("submit", agregarArticulos);
 
-//En este array se guardaran los pantalones que se compren
-const pantalones = []
+function agregarArticulos(a) {
+    a.preventDefault();
 
-let coloresPantalon;
-let preciosPantalon;
+    if (agregarInput.value != "") {
+    let item = document.createElement("li");
+    item.innerText = agregarInput.value;
 
-//Este ciclo es para la venta de pantalones en la que si no deseas comprar ningun pantalon escribes "salir"
-do {
-    coloresPantalon = prompt("De que color le gustaria comprar su pantalon?.\n-Blanco \n-Negro \n-Verde \n-Azul \n-Morado \nSi desea salir, escriba \"salir\"");
-
-    if (coloresPantalon.toLowerCase() !== "salir") {
-
-    do{    
-        preciosPantalon = parseInt(prompt("De que talla deseas la camisa? (Escriba el precio) \n-Talla 38 = $1000 \n-Talla 40 = $2000 \n-Talla 42 = $3000 \n-Talla 44 = $4000 \n-Talla 46 = $5000 \nSi desea salir, escriba \"salir\""));
-    } while (isNaN(preciosPantalon) || preciosPantalon === "" || preciosPantalon === null)
-
-        let compraPantalon = {
-
-            color: coloresPantalon,
-            precio: preciosPantalon
-        }
-        pantalones.push(compraPantalon);
+    agregar.append(item);
+    } else {
+        alert("Debes ingresar una camisa para agregarla a la lista de compra.");
     }
-
-} while (coloresPantalon.toLowerCase() !== "salir")
-
-//Esta funtion es para determinar el costo total de los pantalones   
-function calcularCostoTotalPantalones() {
-    let total = pantalones.reduce((acc, pantalones) => acc + pantalones.precio, 0);
-    return total;
+    
+    agregarInput.focus();
+    agregarForm.reset();
 }
-
-//Esta funtion es para determinar el costo total de la compra
-function calcularCostoTotalGeneral() {
-    let total = calcularCostoTotalCamisas() + calcularCostoTotalPantalones();
-    return total;
-}
-
-//Estos console.log son para mostrar en cosola el array de los pantalones comprados, el costo total de los mismos y el costo total de toda la compra
-console.log("Pantalones comprados", pantalones)
-console.log("Costo total de los pantalones $", calcularCostoTotalPantalones());
-console.log("El costo total de la compra es $", calcularCostoTotalGeneral());
