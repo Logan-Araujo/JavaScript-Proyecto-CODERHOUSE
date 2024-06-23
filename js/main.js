@@ -1,7 +1,5 @@
-//PreEntrega 3
+//Proyecto Final 
 //Logan Araujo Hernandez - Comisión 57695
-
-//Implementar DOM, Eventos y Storage.
 
 //Modo oscuro (cambiar entre modo oscuro y claro) con LocalStorage.
 
@@ -37,26 +35,68 @@ botonColor.addEventListener("click", () => {
 
 })
 
-//Agregar Articulos a una lista de compra
+//Alerta al precionar el boton para activar el modo oscuro.
 
-const agregarForm = document.querySelector("#agregar-form")
-const agregarInput = document.querySelector("#agregar-input")
-const agregar = document.querySelector("#agregar")
+const colorPagina = document.querySelector("#color-pagina");
 
-agregarForm.addEventListener("submit", agregarArticulos);
+colorPagina.addEventListener("click", () => {
 
-function agregarArticulos(a) {
-    a.preventDefault();
+    Swal.fire({
+    title: 'Modo Oscuro',
+    text: 'Activaste el modo oscuro',
+    icon: 'error',
+    iconColor: 'black',
+    confirmButtonText: 'Ok',
+    iconHtml: '🌙'
+  })
+})
 
-    if (agregarInput.value != "") {
-    let item = document.createElement("li");
-    item.innerText = agregarInput.value;
+//Simulador carrito de compra de las botellas
 
-    agregar.append(item);
-    } else {
-        alert("Debes ingresar una camisa para agregarla a la lista de compra.");
+document.addEventListener("DOMContentLoaded", () => {
+    const botonesCompra = document.querySelectorAll(".boton-compra");
+    const carrito = [];
+  
+    botonesCompra.forEach(boton => {
+      boton.addEventListener("click", () => {
+        const titulo = boton.parentElement.querySelector(".card-title").textContent;
+        const precio = {"Botella de agua - 1L": 1000, "Botella de agua - 5L": 5000, "Botella de agua - 20L": 10000}[titulo] || 0;
+        
+        const producto = carrito.find(p => p.titulo === titulo);
+        producto ? producto.cantidad++ : carrito.push({titulo, precio, cantidad: 1});
+        
+        actualizarCarrito();
+      });
+    });
+  
+    function actualizarCarrito() {
+      const listaCarrito = document.getElementById("lista-carrito");
+      listaCarrito.innerHTML = "";
+  
+      let totalCarrito = 0;
+  
+      carrito.forEach(({titulo, precio, cantidad}) => {
+        const itemCarrito = document.createElement("li");
+        itemCarrito.textContent = `${titulo} - ${cantidad} Unidades - ${precio * cantidad} Pesos`;
+        listaCarrito.appendChild(itemCarrito);
+        totalCarrito += precio * cantidad;
+      });
+  
+      document.getElementById("total-carrito").textContent = totalCarrito;
     }
-    
-    agregarInput.focus();
-    agregarForm.reset();
-}
+});
+  
+//Api para simular lista de usuarios satisfechos
+
+const urlUsuario1 = "https://jsonplaceholder.typicode.com/users"
+const tituloUsuario1 = document.querySelector("#titulo-usuario1")
+
+fetch(urlUsuario1)
+    .then( (response) => response.json())
+    .then( (data) => {
+        data.forEach(usuario => {
+            const p1 = document.createElement("h5");
+            p1.textContent = usuario.name;
+            tituloUsuario1.append(p1);
+        });
+})
